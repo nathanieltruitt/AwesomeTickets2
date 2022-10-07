@@ -4,11 +4,10 @@ import { PrivateModule } from './private/private.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, PrivateModule, NgbModule],
+  imports: [BrowserModule, AppRoutingModule, PrivateModule],
   providers: [],
   bootstrap: [AppComponent],
 })

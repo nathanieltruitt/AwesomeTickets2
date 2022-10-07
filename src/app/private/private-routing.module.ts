@@ -1,10 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CsrComponent } from './components/csr/csr.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: 'csr',
+    component: CsrComponent,
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class PrivateRoutingModule { }
+export class PrivateRoutingModule {}
+export const RoutingComponents = [CsrComponent];
