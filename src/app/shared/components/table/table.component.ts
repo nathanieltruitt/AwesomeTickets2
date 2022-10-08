@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Observable } from 'rxjs';
+import { SortEvent } from '../../models/sorting-types.type';
+import { SortTableDirective } from '../../directives/sort-table.directive';
+import { TableService } from '../../services/component-communication/table.service';
 
 @Component({
   selector: 'app-table',
@@ -7,14 +10,36 @@ import { Observable } from 'rxjs';
   styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit {
-  headers$!: Observable<string[]>;
-  rows$!: Observable<object[]>;
+  headerEntries = [
+    { sortable: 'name', name: 'Country' },
+    { sortable: 'area', name: 'Area' },
+    { sortable: 'population', name: 'Population' },
+  ];
+  entries$!: Observable<object[]>;
+  total$!: Observable<number>;
 
-  constructor() {}
+  @ViewChildren(SortTableDirective) headers!: QueryList<SortTableDirective>;
 
-  ngOnInit(): void {}
+  constructor(public tableService: TableService) {}
+
+  ngOnInit(): void {
+    this.entries$ = this.tableService.entities$;
+    this.total$ = this.tableService.total$;
+  }
 
   onGetValues(row: object) {
     return Object.values(row);
+  }
+
+  onSort({ column, direction }: SortEvent) {
+    // resetting other headers
+    this.headers.forEach((header) => {
+      if (header.sortable !== column) {
+        header.direction = '';
+      }
+    });
+
+    this.tableService.sortColumn = column;
+    this.tableService.sortDirection = direction;
   }
 }

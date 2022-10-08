@@ -1,7 +1,7 @@
 import { SortColumn, SortDirection } from './sorting-types.type';
 
 export interface SearchResult {
-  countries: object[];
+  entities: object[];
   total: number;
 }
 

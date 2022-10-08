@@ -1,14 +1,3 @@
-<p>
-  This is a more complete example with a service that simulates server calling:
-</p>
-
-<ul>
-  <li>an observable async service to fetch a list of countries</li>
-  <li>sorting, filtering and pagination</li>
-  <li>simulated delay and loading indicator</li>
-  <li>debouncing of search requests</li>
-</ul>
-
 <form>
   <div class="mb-3 row">
     <label
@@ -22,10 +11,10 @@
         type="text"
         class="form-control"
         name="searchTerm"
-        [(ngModel)]="service.searchTerm"
+        [(ngModel)]="tableService.searchTerm"
       />
     </div>
-    <span class="col col-form-label" *ngIf="service.loading$ | async"
+    <span class="col col-form-label" *ngIf="tableService.loading$ | async"
       >Loading...</span
     >
   </div>
@@ -34,20 +23,18 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-
-        <ng-container *ngIf="headers$ | async as headers">
-          <th
-            *ngFor="let header of headers"
-            scope="col"
-            (sort)="onSort($event)"
-          >
-            {{ header }}
-          </th>
-        </ng-container>
+        <th
+          *ngFor="let header of headerEntries"
+          scope="col"
+          [sortable]="header.sortable"
+          (sort)="onSort($event)"
+        >
+          {{ header.name }}
+        </th>
       </tr>
     </thead>
     <tbody>
-      <ng-container *ngIf="rows$ | async as rows">
+      <ng-container *ngIf="entries$ | async as rows">
         <tr *ngFor="let row of rows">
           <td *ngFor="let data of onGetValues(row)">{{ data }}</td>
         </tr>
@@ -55,12 +42,12 @@
     </tbody>
   </table>
 
-  // TODO: need to add pagination and item per page select
-  <!-- <div class="d-flex justify-content-between p-2">
+  <!-- TODO: need to add pagination and item per page select -->
+  <div class="d-flex justify-content-between p-2">
     <ngb-pagination
       [collectionSize]="(total$ | async)!"
-      [(page)]="service.page"
-      [pageSize]="service.pageSize"
+      [(page)]="tableService.page"
+      [pageSize]="tableService.pageSize"
     >
     </ngb-pagination>
 
@@ -68,11 +55,11 @@
       class="form-select"
       style="width: auto"
       name="pageSize"
-      [(ngModel)]="service.pageSize"
+      [(ngModel)]="tableService.pageSize"
     >
       <option [ngValue]="2">2 items per page</option>
       <option [ngValue]="4">4 items per page</option>
       <option [ngValue]="6">6 items per page</option>
     </select>
-  </div> -->
+  </div>
 </form>

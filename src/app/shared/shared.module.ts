@@ -9,5 +9,6 @@ import { SortTableDirective } from './directives/sort-table.directive';
 @NgModule({
   declarations: [TableComponent, SortTableDirective],
   imports: [CommonModule, NgbModule, FormsModule],
+  exports: [TableComponent],
 })
 export class SharedModule {}
