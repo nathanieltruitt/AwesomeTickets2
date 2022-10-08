@@ -7,9 +7,11 @@ import { RoutingComponents } from './private-routing.module';
 import { PrivateRoutingModule } from './private-routing.module';
 import { PrivateComponent } from './private.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { CompanyTableComponent } from './components/csr/company-table/company-table.component';
+import { ContactTableComponent } from './components/csr/contact-table/contact-table.component';
 
 @NgModule({
-  declarations: [PrivateComponent, NavbarComponent, RoutingComponents],
+  declarations: [PrivateComponent, NavbarComponent, RoutingComponents, CompanyTableComponent, ContactTableComponent],
   imports: [CommonModule, PrivateRoutingModule, SharedModule, NgbModule],
   exports: [PrivateComponent],
 })
