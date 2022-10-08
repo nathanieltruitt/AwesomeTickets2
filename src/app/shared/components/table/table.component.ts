@@ -18,12 +18,12 @@ import { Header } from '../../models/header.interface';
 })
 export class TableComponent implements OnInit {
   // * Example of header entries
-  headerEntries = [
-    { sortable: 'name', name: 'Country' },
-    { sortable: 'area', name: 'Area' },
-    { sortable: 'population', name: 'Population' },
-  ];
-  // @Input() headerEntries!: Header[];
+  // headerEntries = [
+  //   { sortable: 'name', name: 'Country' },
+  //   { sortable: 'area', name: 'Area' },
+  //   { sortable: 'population', name: 'Population' },
+  // ];
+  @Input() headerEntries!: Header[];
   entries$!: Observable<any[]>;
   total$!: Observable<number>;
 
