@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
-import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, delay, map, switchMap, tap } from 'rxjs/operators';
 import { SortDirection } from '../../models/sorting-types.type';
 import { SearchResult, searchState } from '../../models/search.interface';
-import { matches } from '../../helpers/matches.helper';
+import { onFilter } from '../../helpers/onfilter.helper'
 import { sort } from '../../helpers/sort.helper';
 import { COUNTRIES } from './test';
-import { DecimalPipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -86,23 +85,15 @@ export class TableService {
     const { sortColumn, sortDirection, pageSize, page, searchTerm } =
       this._state;
 
-    // 1. sort
-    let entities = sort(COUNTRIES, sortColumn, sortDirection);
+    // 1. sort, filter and paginate
+    let entities = sort(of(COUNTRIES), sortColumn, sortDirection);
 
     // 2. filter
-    let total;
-    if (searchTerm !== '') {
-      entities = entities.filter((country) => matches(country, searchTerm));
-      total = entities.length;
-    } else {
-      total = entities.length;
-    }
 
-    // 3. paginate
-    entities = entities.slice(
-      (page - 1) * pageSize,
-      (page - 1) * pageSize + pageSize
+    // use the onFilter function to filter and sort the list
+    const searchResult = entities.pipe(
+      map((entityList) => onFilter(entityList, {pageSize, page, searchTerm}))
     );
-    return of({ entities, total });
+    return searchResult;
   }
 }

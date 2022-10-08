@@ -1,8 +1,15 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import { Observable } from 'rxjs';
 import { SortEvent } from '../../models/sorting-types.type';
 import { SortTableDirective } from '../../directives/sort-table.directive';
 import { TableService } from '../../services/component-communication/table.service';
+import { Header } from '../../models/header.interface';
 
 @Component({
   selector: 'app-table',
@@ -10,11 +17,13 @@ import { TableService } from '../../services/component-communication/table.servi
   styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit {
+  // * Example of header entries
   headerEntries = [
     { sortable: 'name', name: 'Country' },
     { sortable: 'area', name: 'Area' },
     { sortable: 'population', name: 'Population' },
   ];
+  // @Input() headerEntries!: Header[];
   entries$!: Observable<any[]>;
   total$!: Observable<number>;
 
