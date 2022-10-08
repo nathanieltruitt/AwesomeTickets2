@@ -15,7 +15,7 @@ export class TableComponent implements OnInit {
     { sortable: 'area', name: 'Area' },
     { sortable: 'population', name: 'Population' },
   ];
-  entries$!: Observable<object[]>;
+  entries$!: Observable<any[]>;
   total$!: Observable<number>;
 
   @ViewChildren(SortTableDirective) headers!: QueryList<SortTableDirective>;
@@ -41,5 +41,9 @@ export class TableComponent implements OnInit {
 
     this.tableService.sortColumn = column;
     this.tableService.sortDirection = direction;
+  }
+
+  logIndex(idx: number) {
+    console.log(idx);
   }
 }
