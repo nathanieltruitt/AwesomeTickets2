@@ -11,12 +11,10 @@
         type="text"
         class="form-control"
         name="searchTerm"
-        [(ngModel)]="tableService.searchTerm"
+        [(ngModel)]="searchTerm"
       />
     </div>
-    <span class="col col-form-label" *ngIf="tableService.loading$ | async"
-      >Loading...</span
-    >
+    <span class="col col-form-label" *ngIf="loading$ | async">Loading...</span>
   </div>
 
   <table class="table table-striped">
@@ -34,7 +32,7 @@
       </tr>
     </thead>
     <tbody>
-      <ng-container *ngIf="onGetEntities() | async as rows">
+      <ng-container *ngIf="entries$ | async as rows">
         <tr *ngFor="let row of rows">
           <td *ngFor="let data of onGetValues(row)">{{ data }}</td>
         </tr>
@@ -45,9 +43,9 @@
   <!-- TODO: need to add pagination and item per page select -->
   <div class="d-flex justify-content-between p-2">
     <ngb-pagination
-      [collectionSize]="(onGetTotal() | async)!"
-      [(page)]="tableService.page"
-      [pageSize]="tableService.pageSize"
+      [collectionSize]="(total$ | async)!"
+      [(page)]="page"
+      [pageSize]="pageSize"
     >
     </ngb-pagination>
 
@@ -55,7 +53,7 @@
       class="form-select"
       style="width: auto"
       name="pageSize"
-      [(ngModel)]="tableService.pageSize"
+      [(ngModel)]="pageSize"
     >
       <option [ngValue]="2">2 items per page</option>
       <option [ngValue]="4">4 items per page</option>

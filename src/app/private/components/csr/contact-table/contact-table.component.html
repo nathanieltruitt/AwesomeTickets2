@@ -1,2 +1,6 @@
 <h1 class="mt-3">Contacts</h1>
-<app-table [headerEntries]="headers" [data$]="onGetContacts()"></app-table>
+<app-table
+  [headerEntries]="headers"
+  [data$]="onGetContacts()"
+  [tableId]="'contact'"
+></app-table>

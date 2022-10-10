@@ -1,109 +1,90 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
-import { debounceTime, delay, map, switchMap, tap } from 'rxjs/operators';
-import { SortDirection } from '../../models/sorting-types.type';
-import { SearchResult, searchState } from '../../models/search.interface';
-import { onFilter } from '../../helpers/onfilter.helper';
-import { sort } from '../../helpers/sort.helper';
+import { SearchResult } from '../../models/search.interface';
 import { Company } from 'src/app/shared/models/company.interface';
 import { Contact } from 'src/app/shared/models/contact.interface';
+import { TableData } from '../../models/table-data.interface';
+import { Observable, map, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TableService {
   // TODO: fix up types
-  private _data$!: Observable<Company[]> | Observable<Contact[]>;
-  private _loading$ = new BehaviorSubject<boolean>(true);
-  private _search$ = new Subject<void>();
-  private _entities$ = new BehaviorSubject<object[]>([]);
-  private _total$ = new BehaviorSubject<number>(0);
 
-  private _state: searchState = {
-    page: 1,
-    pageSize: 4,
-    searchTerm: '',
-    sortColumn: '',
-    sortDirection: '',
-  };
-  constructor() {
-    this._search$
-      .pipe(
-        tap(() => this._loading$.next(true)),
-        debounceTime(200),
-        switchMap(() => this._search()),
-        delay(200),
-        tap(() => this._loading$.next(false))
-      )
-      .subscribe((result) => {
-        this._entities$.next(result.entities);
-        this._total$.next(result.total);
-      });
+  constructor() {}
 
-    this._search$.next();
-  }
-
-  get entities$() {
-    return this._entities$.asObservable();
-  }
-  get total$() {
-    return this._total$.asObservable();
-  }
-  get loading$() {
-    return this._loading$.asObservable();
-  }
-  get page() {
-    return this._state.page;
-  }
-  get pageSize() {
-    return this._state.pageSize;
-  }
-  get searchTerm() {
-    return this._state.searchTerm;
-  }
-
-  set data(data: Observable<Company[]> | Observable<Contact[]>) {
-    this._data$ = data;
-  }
-
-  set page(page: number) {
-    this._set({ page });
-  }
-  set pageSize(pageSize: number) {
-    this._set({ pageSize });
-  }
-  set searchTerm(searchTerm: string) {
-    this._set({ searchTerm });
-  }
-  set sortColumn(sortColumn: any) {
-    this._set({ sortColumn });
-  }
-  set sortDirection(sortDirection: SortDirection) {
-    this._set({ sortDirection });
-  }
-
-  private _set(patch: Partial<searchState>) {
-    Object.assign(this._state, patch);
-    this._search$.next();
-  }
-
-  private _search(): Observable<SearchResult> {
+  search(data: TableData): Observable<SearchResult> {
     const { sortColumn, sortDirection, pageSize, page, searchTerm } =
-      this._state;
+      data.state;
 
-    // 1. sort, filter and paginate
-    let entities = sort<Company | Contact>(
-      this._data$ || of([]),
+    // 1. sort
+    let entities = this.sort<Company | Contact>(
+      data.data,
       sortColumn,
       sortDirection
     );
 
-    // 2. filter
+    // 2. filter and paginate
 
     // use the onFilter function to filter the list
     const searchResult = entities.pipe(
-      map((entityList) => onFilter(entityList, { pageSize, page, searchTerm }))
+      map((entityList) =>
+        this.onFilter(entityList, { pageSize, page, searchTerm })
+      )
     );
     return searchResult;
+  }
+
+  matches(entity: any, term: string) {
+    for (let cell of Object.values(entity)) {
+      if (String(cell).toLowerCase().includes(term.toLowerCase())) return true;
+    }
+    return false;
+  }
+
+  onFilter(
+    entities: object[],
+    options: { pageSize: number; page: number; searchTerm: string }
+  ): SearchResult {
+    let total;
+    if (options.searchTerm !== '') {
+      entities = entities.filter((entity) =>
+        this.matches(entity, options.searchTerm)
+      );
+      total = entities.length;
+    } else {
+      total = entities.length;
+    }
+
+    // 3. paginate
+    entities = entities.slice(
+      (options.page - 1) * options.pageSize,
+      (options.page - 1) * options.pageSize + options.pageSize
+    );
+
+    return { entities: of(entities), total: of(total) };
+  }
+
+  sortData<T>(entities: T[], column: any, direction: string) {
+    const compare = (v1: string | number, v2: string | number) =>
+      v1 < v2 ? -1 : v1 > v2 ? 1 : 0;
+    if (direction === '' || column === '') {
+      return entities;
+    } else {
+      return [...entities].sort((a: any, b: any) => {
+        const res = compare(a[column], b[column]);
+        return direction === 'asc' ? res : -res;
+      });
+    }
+  }
+
+  sort<T>(
+    entities: Observable<T[]>,
+    column: any,
+    direction: string
+  ): Observable<T[]> {
+    return entities.pipe(
+      map((entityList) => this.sortData(entityList, column, direction))
+    );
   }
 }
