@@ -11,7 +11,13 @@ import { CompanyTableComponent } from './components/csr/company-table/company-ta
 import { ContactTableComponent } from './components/csr/contact-table/contact-table.component';
 
 @NgModule({
-  declarations: [PrivateComponent, NavbarComponent, RoutingComponents, CompanyTableComponent, ContactTableComponent],
+  declarations: [
+    PrivateComponent,
+    NavbarComponent,
+    RoutingComponents,
+    CompanyTableComponent,
+    ContactTableComponent,
+  ],
   imports: [CommonModule, PrivateRoutingModule, SharedModule, NgbModule],
   exports: [PrivateComponent],
 })

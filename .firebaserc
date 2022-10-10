@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "awesometickets-db409": {
+      "hosting": {
+        "AwesomeTickets2": [
+          "awesometickets-db409"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "awesometickets-db409"
+  }
+}

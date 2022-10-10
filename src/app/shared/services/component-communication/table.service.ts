@@ -3,15 +3,17 @@ import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { debounceTime, delay, map, switchMap, tap } from 'rxjs/operators';
 import { SortDirection } from '../../models/sorting-types.type';
 import { SearchResult, searchState } from '../../models/search.interface';
-import { onFilter } from '../../helpers/onfilter.helper'
+import { onFilter } from '../../helpers/onfilter.helper';
 import { sort } from '../../helpers/sort.helper';
-import { COUNTRIES } from './test';
+import { Company } from 'src/app/shared/models/company.interface';
+import { Contact } from 'src/app/shared/models/contact.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TableService {
   // TODO: fix up types
+  private _data$!: Observable<Company[]> | Observable<Contact[]>;
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
   private _entities$ = new BehaviorSubject<object[]>([]);
@@ -60,6 +62,10 @@ export class TableService {
     return this._state.searchTerm;
   }
 
+  set data(data: Observable<Company[]> | Observable<Contact[]>) {
+    this._data$ = data;
+  }
+
   set page(page: number) {
     this._set({ page });
   }
@@ -86,13 +92,17 @@ export class TableService {
       this._state;
 
     // 1. sort, filter and paginate
-    let entities = sort(of(COUNTRIES), sortColumn, sortDirection);
+    let entities = sort<Company | Contact>(
+      this._data$ || of([]),
+      sortColumn,
+      sortDirection
+    );
 
     // 2. filter
 
-    // use the onFilter function to filter and sort the list
+    // use the onFilter function to filter the list
     const searchResult = entities.pipe(
-      map((entityList) => onFilter(entityList, {pageSize, page, searchTerm}))
+      map((entityList) => onFilter(entityList, { pageSize, page, searchTerm }))
     );
     return searchResult;
   }

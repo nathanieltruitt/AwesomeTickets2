@@ -100,6 +100,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "AwesomeTickets2:build:production",
+            "firebaseProject": "awesometickets-db409",
+            "firebaseHostingSite": "awesometickets-db409"
+          }
         }
       }
     }

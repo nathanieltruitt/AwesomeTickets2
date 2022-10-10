@@ -34,7 +34,7 @@
       </tr>
     </thead>
     <tbody>
-      <ng-container *ngIf="entries$ | async as rows">
+      <ng-container *ngIf="onGetEntities() | async as rows">
         <tr *ngFor="let row of rows">
           <td *ngFor="let data of onGetValues(row)">{{ data }}</td>
         </tr>
@@ -45,7 +45,7 @@
   <!-- TODO: need to add pagination and item per page select -->
   <div class="d-flex justify-content-between p-2">
     <ngb-pagination
-      [collectionSize]="(total$ | async)!"
+      [collectionSize]="(onGetTotal() | async)!"
       [(page)]="tableService.page"
       [pageSize]="tableService.pageSize"
     >
