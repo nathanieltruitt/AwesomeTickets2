@@ -9,6 +9,7 @@ import { PrivateComponent } from './private.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CompanyTableComponent } from './components/csr/company-table/company-table.component';
 import { ContactTableComponent } from './components/csr/contact-table/contact-table.component';
+import { CsrModalComponent } from './csr/csr-modal/csr-modal.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ContactTableComponent } from './components/csr/contact-table/contact-ta
     RoutingComponents,
     CompanyTableComponent,
     ContactTableComponent,
+    CsrModalComponent,
   ],
   imports: [CommonModule, PrivateRoutingModule, SharedModule, NgbModule],
   exports: [PrivateComponent],

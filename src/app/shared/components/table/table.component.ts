@@ -13,7 +13,6 @@ import {
   debounceTime,
   switchMap,
   delay,
-  map,
 } from 'rxjs';
 import { SortEvent } from '../../models/sorting-types.type';
 import { SortTableDirective } from '../../directives/sort-table.directive';
@@ -21,10 +20,9 @@ import { TableService } from '../../services/component-communication/table.servi
 import { Header } from '../../models/header.interface';
 import { Company } from 'src/app/shared/models/company.interface';
 import { Contact } from 'src/app/shared/models/contact.interface';
-import { SearchResult, searchState } from '../../models/search.interface';
+import { searchState } from '../../models/search.interface';
 import { SortDirection } from '../../models/sorting-types.type';
 import { TableData } from '../../models/table-data.interface';
-import { ResultsData } from '../../models/table-data.interface';
 
 @Component({
   selector: 'app-table',

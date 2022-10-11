@@ -1,0 +1,31 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="csr-modal-title">Company</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <label for="everythingSucks">Type Something</label>
+        <div class="input-group">
+          <input
+            class="form-control"
+            type="text"
+            id="everythingSucks"
+            name="everythingSucks"
+          />
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close()">
+      Save
+    </button>
+  </div>
+</ng-template>
