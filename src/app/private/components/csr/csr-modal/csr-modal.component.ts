@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -7,11 +7,16 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./csr-modal.component.scss'],
 })
 export class CsrModalComponent implements OnInit {
+  @ViewChild('content', { static: true }) public content!: TemplateRef<any>;
   constructor(private modalService: NgbModal) {}
 
-  ngOnInit(): void {}
-
-  open(content: TemplateRef<any>) {
-    this.modalService.open(content, { ariaLabelledBy: 'csr-modal-title' });
+  ngOnInit(): void {
+    console.log(this.content);
+    this.modalService.open(this.content, {
+      ariaLabelledBy: 'csr-modal-title',
+      size: 'xl',
+    });
   }
+
+  open(content: TemplateRef<any>) {}
 }

@@ -1,3 +1,9 @@
-<app-company-table></app-company-table>
-<hr />
-<app-contact-table></app-contact-table>
+<select
+  [(ngModel)]="openMenu"
+  (change)="changePath(openMenu)"
+  class="custom-select float-end me-3 mt-3"
+>
+  <option ngValue="companies" selected>Companies</option>
+  <option ngValue="contacts">Contacts</option>
+</select>
+<router-outlet></router-outlet>

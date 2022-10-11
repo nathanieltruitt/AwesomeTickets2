@@ -9,7 +9,8 @@ import { PrivateComponent } from './private.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CompanyTableComponent } from './components/csr/company-table/company-table.component';
 import { ContactTableComponent } from './components/csr/contact-table/contact-table.component';
-import { CsrModalComponent } from './csr/csr-modal/csr-modal.component';
+import { CsrModalComponent } from './components/csr/csr-modal/csr-modal.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { CsrModalComponent } from './csr/csr-modal/csr-modal.component';
     CompanyTableComponent,
     ContactTableComponent,
     CsrModalComponent,
+    HomeComponent,
   ],
   imports: [CommonModule, PrivateRoutingModule, SharedModule, NgbModule],
   exports: [PrivateComponent],

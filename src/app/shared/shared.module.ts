@@ -23,6 +23,6 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
     AngularFireAuthModule,
     AngularFireStorageModule,
   ],
-  exports: [TableComponent],
+  exports: [TableComponent, FormsModule],
 })
 export class SharedModule {}
