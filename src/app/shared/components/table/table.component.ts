@@ -1,6 +1,8 @@
 import {
   Component,
+  EventEmitter,
   Input,
+  Output,
   OnInit,
   QueryList,
   ViewChildren,
@@ -39,9 +41,10 @@ export class TableComponent implements OnInit {
   @Input() headerEntries!: Header[];
   @Input() tableId!: string;
   @Input() data$!: Observable<Company[]> | Observable<Contact[]>;
+  @Output() rowClickEvent = new EventEmitter<number>();
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<TableData>();
-  private _entries$!: Observable<object[]>;
+  private _entries$!: Observable<any[]>;
   private _total$!: Observable<number>;
   private _state: searchState = {
     page: 1,
@@ -135,5 +138,9 @@ export class TableComponent implements OnInit {
       data: this.data$,
       state: this._state,
     });
+  }
+
+  rowClick(id: number) {
+    this.rowClickEvent.emit(id);
   }
 }

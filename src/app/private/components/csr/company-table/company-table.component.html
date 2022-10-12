@@ -3,4 +3,6 @@
   [headerEntries]="headers"
   [data$]="onGetCompanies()"
   [tableId]="'company'"
+  (rowClickEvent)="onRowClick($event)"
 ></app-table>
+<router-outlet></router-outlet>

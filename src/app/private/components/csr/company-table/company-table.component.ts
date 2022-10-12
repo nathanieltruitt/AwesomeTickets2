@@ -3,6 +3,7 @@ import { CompanyService } from 'src/app/private/services/data-access/company.ser
 import { Header } from 'src/app/shared/models/header.interface';
 import { Company } from 'src/app/shared/models/company.interface';
 import { map } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-company-table',
@@ -29,7 +30,11 @@ export class CompanyTableComponent implements OnInit {
     },
   ];
 
-  constructor(private companyService: CompanyService) {}
+  constructor(
+    private companyService: CompanyService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {}
 
@@ -47,5 +52,9 @@ export class CompanyTableComponent implements OnInit {
       numberOfTickets: company.numberOfTickets,
       assigned: company.assigned,
     };
+  }
+
+  onRowClick(id: number) {
+    this.router.navigate([id], { relativeTo: this.route });
   }
 }

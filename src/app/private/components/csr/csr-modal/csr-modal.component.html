@@ -5,23 +5,16 @@
       type="button"
       class="btn-close"
       aria-label="Close"
-      (click)="modal.dismiss()"
+      (click)="dismissModal(modal)"
     ></button>
   </div>
   <div class="modal-body">
-    <form>
-      <div class="mb-3">
-        <label for="everythingSucks">Type Something</label>
-        <div class="input-group">
-          <input
-            class="form-control"
-            type="text"
-            id="everythingSucks"
-            name="everythingSucks"
-          />
-        </div>
-      </div>
-    </form>
+    <ng-container *ngIf="isCompany">
+      <span>This is a company form</span>
+    </ng-container>
+    <ng-container *ngIf="!isCompany">
+      <span>This is a contact form</span>
+    </ng-container>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="modal.close()">

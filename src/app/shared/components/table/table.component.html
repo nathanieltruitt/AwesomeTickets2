@@ -33,8 +33,10 @@
     </thead>
     <tbody>
       <ng-container *ngIf="entries$ | async as rows">
-        <tr *ngFor="let row of rows">
-          <td *ngFor="let data of onGetValues(row)">{{ data }}</td>
+        <tr *ngFor="let row of rows" (click)="rowClick(row.id)">
+          <td *ngFor="let data of onGetValues(row)">
+            {{ data }}
+          </td>
         </tr>
       </ng-container>
     </tbody>
