@@ -33,6 +33,12 @@ const routes: Routes = [
       {
         path: 'contacts',
         component: ContactTableComponent,
+        children: [
+          {
+            path: ':id',
+            component: CsrModalComponent,
+          },
+        ],
       },
     ],
   },

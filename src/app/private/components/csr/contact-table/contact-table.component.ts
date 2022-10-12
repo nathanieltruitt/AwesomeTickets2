@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { ContactService } from 'src/app/private/services/data-access/contact.service';
 import { Contact } from 'src/app/shared/models/contact.interface';
@@ -18,7 +19,11 @@ export class ContactTableComponent implements OnInit {
     { sortable: 'officeNumber', name: 'Office Number' },
   ];
 
-  constructor(private contactService: ContactService) {}
+  constructor(
+    private contactService: ContactService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {}
 
@@ -38,5 +43,9 @@ export class ContactTableComponent implements OnInit {
       cellNumber: contact.cellNumber,
       officeNumber: contact.officeNumber,
     };
+  }
+
+  onRowClick(id: number) {
+    this.router.navigate([id], { relativeTo: this.route });
   }
 }

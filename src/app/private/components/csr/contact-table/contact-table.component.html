@@ -3,4 +3,6 @@
   [headerEntries]="headers"
   [data$]="onGetContacts()"
   [tableId]="'contact'"
+  (rowClickEvent)="onRowClick($event)"
 ></app-table>
+<router-outlet></router-outlet>

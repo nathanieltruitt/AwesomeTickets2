@@ -7,6 +7,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
   providedIn: 'root',
 })
 export class CompanyService {
+  // TODO: error handling for company stream
   private companies$!: Observable<Company[]>;
 
   constructor(private db: AngularFirestore) {

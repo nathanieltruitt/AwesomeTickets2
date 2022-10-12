@@ -7,6 +7,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
   providedIn: 'root',
 })
 export class ContactService {
+  // TODO: error handling for contact stream
   private _contacts$!: Observable<Contact[]>;
 
   constructor(private db: AngularFirestore) {

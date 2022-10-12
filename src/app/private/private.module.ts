@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { RoutingComponents } from './private-routing.module';
 import { PrivateRoutingModule } from './private-routing.module';
@@ -22,7 +23,13 @@ import { HomeComponent } from './components/home/home.component';
     CsrModalComponent,
     HomeComponent,
   ],
-  imports: [CommonModule, PrivateRoutingModule, SharedModule, NgbModule],
+  imports: [
+    CommonModule,
+    PrivateRoutingModule,
+    SharedModule,
+    NgbModule,
+    ReactiveFormsModule,
+  ],
   exports: [PrivateComponent],
 })
 export class PrivateModule {}

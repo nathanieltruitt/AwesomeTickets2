@@ -4,6 +4,8 @@ import { Header } from 'src/app/shared/models/header.interface';
 import { Company } from 'src/app/shared/models/company.interface';
 import { map } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { CsrModalService } from 'src/app/private/services/component-communication/csr-modal.service';
 
 @Component({
   selector: 'app-company-table',
