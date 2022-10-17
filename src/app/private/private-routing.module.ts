@@ -28,6 +28,10 @@ const routes: Routes = [
             path: ':id',
             component: CsrModalComponent,
           },
+          {
+            path: 'new',
+            component: CsrModalComponent,
+          },
         ],
       },
       {

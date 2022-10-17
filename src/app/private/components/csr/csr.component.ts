@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./csr.component.scss'],
 })
 export class CsrComponent implements OnInit {
-  openMenu!: string;
+  openMenu = 'companies';
 
   constructor(private route: ActivatedRoute, private router: Router) {}
 

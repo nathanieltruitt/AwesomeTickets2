@@ -11,10 +11,8 @@
     ></button>
   </div>
   <div class="modal-body">
-    <!-- TODO: build out forms -->
     <!-- TODO: crud existing data from backend -->
     <!-- TODO: error validation -->
-    <!-- TODO: change contact to a  -->
     <ng-container *ngIf="isCompany">
       <form [formGroup]="inputForm">
         <div class="form-group">
@@ -24,10 +22,11 @@
             type="text"
             id="name"
             name="name"
-            formControlName="name"
+            formControlName="companyName"
           />
         </div>
 
+        <!-- TODO: change contact to a select  -->
         <div class="form-group">
           <label class="mt-2" for="contact">Contact</label>
           <input
@@ -35,7 +34,7 @@
             type="text"
             id="contact"
             name="contact"
-            formControlName="contact"
+            formControlName="primaryContact"
           />
         </div>
 
@@ -156,7 +155,11 @@
     </ng-container>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close()">
+    <button
+      type="button"
+      class="btn btn-outline-dark"
+      (click)="onSaveData(modal)"
+    >
       Save
     </button>
   </div>

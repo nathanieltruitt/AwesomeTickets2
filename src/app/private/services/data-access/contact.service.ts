@@ -18,9 +18,10 @@ export class ContactService {
     return this._contacts$;
   }
 
-  public set Contact(idx: number) {
-    this.db.collection<Contact>('Contacts', (ref) =>
-      ref.where('id', '==', idx)
-    );
+  updateContact(idx: number, data: Contact, isNew: boolean) {
+    this.db
+      .collection<Contact>('Contacts', (ref) => ref.where('id', '==', idx))
+      .doc()
+      .update(data);
   }
 }

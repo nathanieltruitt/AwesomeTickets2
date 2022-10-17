@@ -15,6 +15,7 @@ import {
   debounceTime,
   switchMap,
   delay,
+  Subscription,
 } from 'rxjs';
 import { SortEvent } from '../../models/sorting-types.type';
 import { SortTableDirective } from '../../directives/sort-table.directive';
@@ -44,6 +45,7 @@ export class TableComponent implements OnInit {
   @Output() rowClickEvent = new EventEmitter<number>();
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<TableData>();
+  private _searchSub!: Subscription;
   private _entries$!: Observable<any[]>;
   private _total$!: Observable<number>;
   private _state: searchState = {
@@ -59,7 +61,7 @@ export class TableComponent implements OnInit {
   constructor(public tableService: TableService) {}
 
   ngOnInit(): void {
-    this._search$
+    this._searchSub = this._search$
       .pipe(
         tap(() => this._loading$.next(true)),
         debounceTime(200),
@@ -142,5 +144,9 @@ export class TableComponent implements OnInit {
 
   rowClick(id: number) {
     this.rowClickEvent.emit(id);
+  }
+
+  ngOnDestroy() {
+    this._searchSub.unsubscribe();
   }
 }

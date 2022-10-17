@@ -59,4 +59,8 @@ export class CompanyTableComponent implements OnInit {
   onRowClick(id: number) {
     this.router.navigate([id], { relativeTo: this.route });
   }
+
+  onNewCompany() {
+    this.router.navigate(['new'], { relativeTo: this.route });
+  }
 }
